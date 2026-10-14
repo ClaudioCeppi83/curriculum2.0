@@ -10,24 +10,24 @@
 
 {{ with $response }}
   {{ with .Err }}
-    {{ errorf "Failed %s on %s. Error: %s" $blockData.api .Page.Title .Err }}
-  {{ end }}
-
-  {{ $response := .Content | unmarshal }}
-  {{ $decodedContent := $response.content | base64Decode }}
-  <section
-    class="c-block c-block--{{ $blockData.type }}"
-    aria-labelledby="{{ $blockData.name |urlize }}">
-    <header class="c-block__header">
-      <h2
-        class="c-block__title e-heading__2"
-        id="{{ $blockData.name |urlize }}">
-        <a href="{{ $response.html_url }}">🔗 {{ $blockData.name }}</a>
-      </h2>
-      {{ partial "time.html" $pageContext }}
-    </header>
-    {{ $extractedObjectives := partial "strings/extract-github-objectives.html" $decodedContent }}
-    {{ if gt (len $extractedObjectives) 0 }}
+    {{ warnf "Failed fetching %s on %s. Error: %s" $blockData.api $pageContext.Page.Title . }}
+  {{ else }}
+    {{ with .Content }}
+      {{ $response := . | unmarshal }}
+      {{ $decodedContent := $response.content | base64Decode }}
+      <section
+        class="c-block c-block--{{ $blockData.type }}"
+        aria-labelledby="{{ $blockData.name |urlize }}">
+        <header class="c-block__header">
+          <h2
+            class="c-block__title e-heading__2"
+            id="{{ $blockData.name |urlize }}">
+            <a href="{{ $response.html_url }}">🔗 {{ $blockData.name }}</a>
+          </h2>
+          {{ partial "time.html" $pageContext }}
+        </header>
+        {{ $extractedObjectives := partial "strings/extract-github-objectives.html" $decodedContent }}
+        {{ if gt (len $extractedObjectives) 0 }}
       <details>
         <summary><h3 class="e-heading__5">Learning Objectives</h3></summary>
         {{ range $extractedObjectives }}
@@ -64,4 +64,6 @@
       </section>
     {{ end }}
   </section>
+  {{ end }}
+{{ end }}
 {{ end }}

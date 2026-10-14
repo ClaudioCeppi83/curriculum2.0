@@ -3,6 +3,7 @@
 // menu toggle
 const menuToggles = document.querySelectorAll(".js-menu-toggle");
 const menu = document.getElementById("site-menu");
+const main = document.getElementById("main");
 const skipLink = document.getElementById("skip-link");
 function toggleMenu() {
   menu.classList.toggle("is-active");

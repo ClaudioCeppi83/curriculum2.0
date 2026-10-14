@@ -1,6 +1,7 @@
 .c-page-header {
   &__title {
-    text-shadow: -2px 1px 0 none;
+    color: var(--theme-color--brand-text, var(--theme-color--brand));
+    text-shadow: none;
     background-color: transparent;
   }
   &__description {

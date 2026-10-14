@@ -1,0 +1,19 @@
+# MigraCode Barcelona — Introduction to Programming (ITP) Curriculum
+
+> MigraCode Barcelona offers free tech training for refugees, migrants, and underserved communities in Barcelona, Spain. This curriculum covers the foundational Introduction to Programming (ITP) course, built on open-source educational resources adapted from CodeYourFuture.
+
+## Core Modules & Sections
+- [Course Overview](https://migracode-itp.netlify.app/)
+- [The Piscine](https://migracode-itp.netlify.app/piscine/): 3 intensive 1-week sprints covering computational thinking, variables, loops, conditionals, functions, arrays, and problem solving.
+- [Structuring Data](https://migracode-itp.netlify.app/structuring-data/): Sprints covering Objects, JSON, arrays of objects, higher-order functions (map, filter, reduce), and API data consumption.
+- [Personal Development (PD)](https://migracode-itp.netlify.app/pd/): Employability, teamwork, professional communication, and tech industry career prep.
+- [Guides & How This Works](https://migracode-itp.netlify.app/how-this-works/): Trainee guide, flipped classroom methodology, day plans, sprints, backlogs, and PR submission workflows.
+
+## Educational Methodology
+- **Flipped Classroom**: Trainees study prep material asynchronously before class, dedicating live sessions to collaborative pair-programming, workshops, and code reviews.
+- **Sprint & Agile Backlog**: Course structured in agile sprints with clear user stories, acceptance criteria, and demo days.
+- **Continuous Assessment**: Pull request submissions evaluated against structured rubric criteria.
+
+## Organizations
+- [MigraCode Barcelona](https://migracode.org/)
+- [Open Cultural Center](https://openculturalcenter.org/)

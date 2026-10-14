@@ -12,17 +12,18 @@
 {{ with resources.GetRemote $api $headers }}
   {{ with .Err }}
     {{ warnf "🏷️ No contributors: %s . Error: %s ." $api . }}
-  {{ end }}
-
-  {{ $contributors := .Content | unmarshal }}
-  <ol class="c-contributors">
-    {{ range sort $contributors ".contributions" "desc" }}
-      <li class="c-contributor">
-        <h3 class="c-contributor__name">
-          <a class="c-contributor__link" href="{{ .html_url }}">{{ .login }}</a>
-        </h3>
-        <img class="c-contributor__avatar" src="{{ .avatar_url }}" alt="" />
-      </li>
+  {{ else }}
+    {{ with .Content | unmarshal }}
+      <ol class="c-contributors">
+        {{ range sort . ".contributions" "desc" }}
+          <li class="c-contributor">
+            <h3 class="c-contributor__name">
+              <a class="c-contributor__link" href="{{ .html_url }}">{{ .login }}</a>
+            </h3>
+            <img class="c-contributor__avatar" src="{{ .avatar_url }}" alt="" />
+          </li>
+        {{ end }}
+      </ol>
     {{ end }}
-  </ol>
+  {{ end }}
 {{ end }}

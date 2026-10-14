@@ -2,7 +2,7 @@
 {{ $blockData := .Page.Scratch.Get "blockData" }}
 {{ $response := resources.GetRemote $blockData.api $blockData.headers }}
 
-{{ if $response }}
+{{ if and $response (not $response.Err) }}
   {{ $response = $response.Content | transform.Unmarshal }}
   <section class="c-block c-block--{{ $blockData.type }}">
     <header class="c-block__header">

@@ -27,11 +27,11 @@ notFoundErrorLevel = 'warning'
      [[menus.secondary]]
         name = "👋🏿 About MigraCode"
         weight = 2
-        url = "migracode.org"
+        url = "https://migracode.org/"
     [[menus.secondary]]
         name = " 👨‍👩‍👦‍👦 About Open Cultural Center"
         weight = 3
-        url = "openculturalcenter.org"
+        url = "https://openculturalcenter.org/"
 
 [page]
   nextPrevInSectionSortOrder = 'asc'

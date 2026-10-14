@@ -44,7 +44,7 @@
   }
 </style>
 <script src="/pagefind/pagefind-ui.js" type="text/javascript" defer></script>
-<div id="search" class="l-header__search"></div>
+<div id="search" class="l-header__search" data-pagefind-ignore></div>
 <script>
   window.addEventListener("DOMContentLoaded", (event) => {
     new PagefindUI({
@@ -54,5 +54,14 @@
       showImages: false,
       showTags: true,
     });
+    // Ensure form field has accessibility attributes
+    setTimeout(() => {
+      const searchInput = document.querySelector("#search input");
+      if (searchInput) {
+        if (!searchInput.getAttribute("id")) searchInput.setAttribute("id", "site-search-input");
+        if (!searchInput.getAttribute("name")) searchInput.setAttribute("name", "search");
+        if (!searchInput.getAttribute("aria-label")) searchInput.setAttribute("aria-label", "Search curriculum");
+      }
+    }, 100);
   });
 </script>

@@ -1,5 +1,6 @@
 title = "ITP"
-baseURL = "https://programming.codeyourfuture.io/"
+baseURL = "https://migracode-itp.netlify.app/"
+enableRobotsTXT = true
 
 [module]
   [[module.imports]]

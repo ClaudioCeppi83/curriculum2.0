@@ -47,7 +47,7 @@
   }
 
   &__title {
-    color: var(--theme-color--brand);
+    color: var(--theme-color--brand-text, var(--theme-color--brand));
     margin-bottom: calc(-1 * var(--theme-spacing--4));
     transform: translate3d(
         calc(-1 * var(--theme-spacing--3)),

@@ -71,5 +71,32 @@
 
   <!-- <link rel="shortcut icon" href="{{ .Site.BaseURL }}favicon.ico" /> -->
   <meta name="theme-color" content="#e3ddeef2" />
-  <link rel="manifest" href="{{ .Site.BaseURL }}manifest.json" />
+  <link rel="manifest" href="{{ "manifest.json" | relURL }}" />
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ .Permalink }}" />
+  <meta property="og:title" content="{{ title .Title }} | {{ .Site.Title }}" />
+  <meta property="og:description" content="{{ with .Page.Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+
+  <!-- Twitter Meta -->
+  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:url" content="{{ .Permalink }}" />
+  <meta property="twitter:title" content="{{ title .Title }} | {{ .Site.Title }}" />
+  <meta property="twitter:description" content="{{ with .Page.Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "{{ .Site.Title }} - {{ title .Title }}",
+    "description": "{{ with .Page.Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}",
+    "provider": {
+      "@type": "Organization",
+      "name": "MigraCode Barcelona",
+      "sameAs": "https://migracode.org"
+    }
+  }
+  </script>
 </head>

@@ -1,0 +1,71 @@
+name: Quality Gate & Site Verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate-tooling:
+    name: Tooling & Consistency Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          cache: true
+
+      - name: Run Go Unit Tests
+        run: cd tooling/go && go test -v ./...
+
+      - name: Build and Run Consistency Enforcers
+        run: |
+          cd tooling/go
+          go build ./cmd/local-overrides-enforcer
+          go build ./cmd/sprint-consistency
+          go build ./cmd/site-consistency
+          ./local-overrides-enforcer
+          ./sprint-consistency --exclude-roots org-cyf-launch
+          ./site-consistency
+
+  validate-build:
+    name: Hugo Build & Search Indexing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Hugo Extended
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.136.3'
+          extended: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build ITP Curriculum
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd org-cyf-itp
+          npm install --legacy-peer-deps
+          hugo --minify
+          npx -y pagefind --site public
+
+      - name: Lychee Link Checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --verbose --no-progress './org-cyf-itp/public/**/*.html' --exclude 'https://api.github.com/.*' --exclude 'http://localhost.*'
+          fail: false

@@ -23,7 +23,7 @@
   &__text {
     .c-page-header--solo & {
       @media (min-width: $c-med) {
-        max-width: 7ch;
+        max-width: 25ch;
         overflow: hidden;
         text-overflow: ellipsis;
         display: block;

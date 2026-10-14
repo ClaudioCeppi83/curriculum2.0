@@ -7,10 +7,9 @@
 {{ end }}
 {{ with $response }}
   {{ with .Err }}
-    {{ errorf "Failed %s on %s. Error: %s" $blockData.api .Page.Title . }}
-  {{ end }}
-
-  {{ with .Content }}
+    {{ warnf "Failed fetching %s. Error: %s" $blockData.api . }}
+  {{ else }}
+    {{ with .Content }}
 
     {{ if eq . "[]" }}
       {{ warnf "No pull requests found for %s" $blockData.api }}
@@ -65,4 +64,5 @@
       </section>
     {{ end }}
   {{ end }}
+{{ end }}
 {{ end }}

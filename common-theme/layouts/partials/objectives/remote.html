@@ -11,20 +11,26 @@
 {{ end }}
 
 {{ with $response }}
-  {{ $response := .Content | unmarshal }}
-  {{/* readme and issue responses are a tiny bit different but not enough to warrant different partials */}}
-  {{ if eq $blockType "readme" }}
-    {{ $response = $response.content | base64Decode }}
-  {{ end }}
-  {{ if eq $blockType "issue" }}
-    {{ $response = $response.body }}
-  {{ end }}
+  {{ with .Err }}
+    {{ warnf "Couldn't fetch remote objectives at %s: %s" $.blockData.api . }}
+  {{ else }}
+    {{ with .Content }}
+      {{ $response := . | unmarshal }}
+      {{/* readme and issue responses are a tiny bit different but not enough to warrant different partials */}}
+      {{ if eq $blockType "readme" }}
+        {{ $response = $response.content | base64Decode }}
+      {{ end }}
+      {{ if eq $blockType "issue" }}
+        {{ $response = $response.body }}
+      {{ end }}
 
-  {{ $extractedObjectives := partial "strings/extract-github-objectives.html" $response }}
-  {{ if gt (len $extractedObjectives) 0 }}
-    {{ if $showTitle }}<h5>{{ $showTitle }}</h5>{{ end }}
-    {{ range $extractedObjectives }}
-      {{ . | page.RenderString }}
+      {{ $extractedObjectives := partial "strings/extract-github-objectives.html" $response }}
+      {{ if gt (len $extractedObjectives) 0 }}
+        {{ if $showTitle }}<h5>{{ $showTitle }}</h5>{{ end }}
+        {{ range $extractedObjectives }}
+          {{ . | page.RenderString }}
+        {{ end }}
+      {{ end }}
     {{ end }}
   {{ end }}
 {{ end }}

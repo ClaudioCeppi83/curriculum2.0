@@ -1,20 +1,28 @@
 @mixin light-palette {
-  // these brand colours are set and then everything else is derived from the key
+  // Brand colors: #15d4be kept for identity, badges and borders
   --theme-color--brand: rgb(21, 212, 190);
-  --theme-color--brand-shade: rgba(21, 212, 190, .05);
-  // this is picked from CYF Canva brand palette and we will take the hue from this
+  --theme-color--brand-shade: rgba(21, 212, 190, .08);
+  // Accessible brand text for headings and links on light background (WCAG AA >= 4.5:1)
+  --theme-color--brand-text: #0d8a7d;
   --theme-color--accent: rgb(21, 212, 190);
   --theme-color--accent-shade: hsla(146, 100%, 46%, 0.5);
-  // this is the nearest accessible shade to brand red
-  --theme-color--pop: hsla(262, 100%, 62%, 1);
+  // Accessible pop color for active states and highlights
+  --theme-color--pop: #4f46e5;
 
-  // key
+  // Key
   --hue: 247;
-  //signals should stay green, but let's pick it from brand
-  --theme-color--good: hsla(146, 83%, 60%, 0.5);
-  --theme-color--bad: var(--theme-color--brand-shade);
+  --theme-color--good: #059669;
+  --theme-color--bad: #dc2626;
 }
 
 @mixin dark-palette {
   --hue: 247;
+  --theme-color--brand: rgb(21, 212, 190);
+  // Luminous turquoise for dark mode readability (WCAG AA > 7:1)
+  --theme-color--brand-text: #5eead4;
+  --theme-color--accent: #5eead4;
+  --theme-color--pop: #818cf8;
+  --theme-color--ink: #f8fafc;
+  --theme-color--ink-fade: rgba(248, 250, 252, 0.6);
+  --theme-color--outline: rgba(94, 234, 212, 0.3);
 }
