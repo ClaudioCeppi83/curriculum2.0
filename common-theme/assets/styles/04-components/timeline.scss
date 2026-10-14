@@ -1,60 +1,109 @@
+// Timeline Component (Module & Sprint Roadmaps)
 .c-timeline,
 [class="c-timeline"] {
-  --box: var(--theme-spacing--gutter);
+  list-style: none;
+  padding: 1.5rem 0 2rem 1.5rem;
+  margin: 1.5rem 0 2.5rem 0.5rem;
   position: relative;
-  transform: translateX(var(--box));
-
-  padding: var(--theme-spacing--6) 0;
 
   &__entry,
   [class="c-timeline__entry"] {
+    position: relative;
     display: flex;
     align-items: center;
-    border-left: var(--theme-border--thick);
-    border-image: var(--theme-border-image);
-    padding: 0 var(--box) var(--theme-spacing--5) 0;
+    border-left: 2px solid var(--theme-color--outline);
+    padding: 0 0 1.5rem 2.25rem;
     counter-increment: timeline 1;
+
     &:before {
       content: counter(timeline);
-      padding: var(--box);
-      height: var(--box);
-      width: var(--box);
-      clip-path: circle();
-      display: inline-grid;
-      place-content: center;
-      background-color: var(--theme-color--pop);
-      color: var(--theme-color--ink);
-      transform: translateX(calc(var(--box) * -1.5));
-      transition: background-color 0.3s;
-      font: var(--theme-font--system);
+      position: absolute;
+      left: -19px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--theme-color--brand);
+      color: #ffffff;
+      font-family: var(--theme-font--display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 8px rgba(0, 191, 165, 0.25);
+      z-index: 2;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     &:hover:before {
-      background-color: var(--theme-color--pop);
-      color: var(--theme-color--paper);
+      transform: scale(1.08);
+      box-shadow: 0 4px 12px rgba(0, 191, 165, 0.4);
     }
 
     &:last-of-type {
-      border-color: transparent;
-      border-image: none;
-      .c-timeline--block &,
-      .c-timeline--card & {
-        border-color: var(--theme-color--ink);
+      border-left-color: transparent;
+      padding-bottom: 0;
+    }
+  }
+
+  &__link,
+  &__post {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: var(--theme-color--block);
+    border: 1px solid var(--theme-color--outline);
+    border-radius: 12px;
+    padding: 1.15rem 1.5rem;
+    text-decoration: none;
+    box-shadow: var(--theme-box-shadow);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+
+    &:hover {
+      border-color: var(--theme-color--brand);
+      box-shadow: var(--theme-box-shadow--lifted);
+      transform: translateX(4px);
+      text-decoration: none;
+
+      .c-timeline__title {
+        color: var(--theme-color--brand);
       }
+
+      &:after {
+        transform: translateX(4px);
+      }
+    }
+
+    &:after {
+      content: "→";
+      font-family: var(--theme-font--display);
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: var(--theme-color--brand);
+      margin-left: auto;
+      padding-left: 1rem;
+      transition: transform 0.2s ease;
     }
   }
 
   &__title {
-    text-transform: capitalize;
+    font-family: var(--theme-font--display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--theme-color--ink);
     margin: 0;
-    @include on-event(false, ".c-timeline__entry") {
-      text-decoration: underline;
-    }
+    text-transform: capitalize;
+    transition: color 0.15s ease;
   }
 
-  &__link {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    gap: 0 var(--theme-spacing--1);
+  &__meta {
+    font-family: var(--theme-font--copy);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--theme-color--ink-secondary);
+    margin: 0 0 0 0.5rem;
   }
 }

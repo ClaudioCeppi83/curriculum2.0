@@ -1,40 +1,62 @@
+// Heading Element Tokens & Typography Hierarchy
 $heading__levels: 1, 2, 3, 4, 5, 6;
+
 @each $h in $heading__levels {
   h#{$h},
   .e-heading__#{$h} {
     font-family: var(--theme-font--display);
     font-size: var(--theme-type-size--#{$h});
-    font-weight: 300;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
     margin: 0;
   }
-  // unstyled headings from markdown/ body copy need some relational breathing space
+  // Unstyled headings from markdown body copy need relational breathing space
   h#{$h}:not([class]) {
     margin-bottom: 0.75em;
   }
 }
 
-h4,
-.e-heading__4 {
-  font-weight: 500;
-  color: var(--theme-color--pop);
+h1,
+.e-heading__1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
+
 h2,
 .e-heading__2 {
   font-weight: 700;
-}
-h2:not([class])::after {
-  content: "";
-  width: 4ch;
-  height: 4px;
-  display: block;
-  background-image: linear-gradient(
-    45deg,
-    var(--theme-color--accent),
-    var(--theme-color--pop)
-  );
+  letter-spacing: -0.015em;
 }
 
-h1,
-.e-heading__1 {
-  font-weight: 900;
+h2:not([class])::after {
+  content: "";
+  width: 3.5ch;
+  height: 3px;
+  border-radius: 2px;
+  display: block;
+  margin-top: 0.25em;
+  background-color: var(--theme-color--brand);
+}
+
+h3,
+.e-heading__3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h4,
+.e-heading__4 {
+  font-weight: 600;
+  color: var(--theme-color--brand-text, var(--theme-color--brand));
+}
+
+h5,
+.e-heading__5 {
+  font-weight: 600;
+}
+
+h6,
+.e-heading__6 {
+  font-weight: 600;
 }

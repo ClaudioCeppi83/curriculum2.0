@@ -1,11 +1,15 @@
+// Table Element Styling
 table {
-  display: block;
   width: 100%;
-  width: max-content;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--theme-color--outline);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1.5rem 0 2rem 0;
+  box-shadow: var(--theme-box-shadow);
+  display: table;
   max-width: 100%;
-  overflow: auto;
-  border-bottom: var(--theme-border--thick);
-  border-image: var(--theme-border-image);
 }
 
 .highlight table {
@@ -13,11 +17,31 @@ table {
 }
 
 thead th {
-  font: var(--theme-font--system);
-  background-color: var(--theme-color--block);
+  font-family: var(--theme-font--display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  background-color: var(--theme-color--brand-tint);
+  color: var(--theme-color--ink);
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--theme-color--outline);
 }
 
-td {
-  padding: var(--theme-spacing--1);
+tbody td {
+  padding: 0.85rem 1rem;
   background-color: var(--theme-color--block);
+  color: var(--theme-color--ink);
+  font-family: var(--theme-font--copy);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  border-bottom: 1px solid var(--theme-color--outline-subtle);
+  vertical-align: top;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover td {
+  background-color: var(--theme-color--brand-tint);
 }

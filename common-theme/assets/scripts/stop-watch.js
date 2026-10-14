@@ -21,7 +21,8 @@ class StopWatch {
     timeElements.forEach((timeElement) => {
       timeElement.setAttribute("tabindex", "0");
       timeElement.setAttribute("role", "button");
-      timeElement.setAttribute("aria-label", "Start countdown timer");
+      const text = timeElement.textContent ? timeElement.textContent.trim() : "";
+      timeElement.setAttribute("aria-label", text ? text + " - Start countdown timer" : "Start countdown timer");
 
       timeElement.addEventListener("keydown", (event) => {
         if (

@@ -1,35 +1,76 @@
+// Block Component (Day Plans, Workshops, Exercises)
 .c-block {
   scroll-snap-align: start;
-  background-color: var(--theme-color--paper-fade);
+  background-color: var(--theme-color--block);
+  border: 1px solid var(--theme-color--outline);
+  border-radius: 12px;
+  box-shadow: var(--theme-box-shadow);
   z-index: 2;
   position: relative;
-  padding: var(--theme-spacing--2) var(--theme-spacing--gutter)
-    var(--theme-spacing--3);
+  padding: 1.5rem;
   width: 100%;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: rgba(0, 191, 165, 0.4);
+    box-shadow: var(--theme-box-shadow--lifted);
+  }
 
   &__header {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
-    margin: var(--theme-spacing--1) 0 var(--theme-spacing--gutter) 0;
-    gap: var(--theme-spacing--gutter);
+    margin: 0 0 1rem 0;
+    gap: 1rem;
+    border-bottom: 1px solid var(--theme-color--outline-subtle);
+    padding-bottom: 0.75rem;
   }
 
   &__objectives {
     width: 100%;
+    margin-top: 0.75rem;
   }
 
   &__series {
     display: grid;
-    gap: var(--theme-spacing--gutter);
+    gap: 1.25rem;
+
+    &--timeline {
+      gap: 1.25rem;
+    }
   }
 
   &__title {
+    font-family: var(--theme-font--display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 0;
+    scroll-margin-top: var(--theme-spacing--scrollmargin);
+
     > a:not([class]) {
       text-decoration: none;
+      color: var(--theme-color--ink);
+      &:hover {
+        color: var(--theme-color--brand);
+      }
     }
-    scroll-margin-top: var(--theme-spacing--scrollmargin);
+  }
+
+  &__time {
+    cursor: default;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--theme-font--code);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--theme-color--ink);
+    background-color: var(--theme-color--brand-tint);
+    border: 1px solid var(--theme-color--outline);
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
   }
 
   &__feedback {
@@ -37,8 +78,7 @@
   }
 
   &--link {
-    padding: var(--theme-spacing--2) var(--theme-spacing--gutter)
-      var(--theme-spacing--3) 0;
+    padding: 1.25rem 1.5rem;
   }
 
   &--youtube {
@@ -46,37 +86,16 @@
     padding: 0;
     border: 0;
     box-shadow: none;
+    background: transparent;
   }
 
   &--pullreq {
-    background-image: linear-gradient(
-      -90deg,
-      var(--theme-color--accent-shade),
-      var(--theme-color--paper),
-      var(--theme-color--paper),
-      var(--theme-color--paper)
-    );
+    border-left: 4px solid var(--theme-color--brand);
   }
-  // on a day plan we have a load of blocks and the shadow is too much
 
-  .c-block__series--timeline & {
-    box-shadow: var(--theme-box-shadow--slim);
-    &__time {
-      font-size: var(--theme-type-size--6);
-    }
-  }
-  // TODO track down and rm this
   &--pd.c-block {
     box-shadow: none;
-    border: none;
-    padding-bottom: 0;
-  }
-
-  &__time {
-    cursor: pointer;
-    color: var(--theme-color--ink);
-    @include on-event(false) {
-      color: var(--theme-color--pop);
-    }
+    border: 1px solid var(--theme-color--outline);
+    padding: 1.25rem;
   }
 }

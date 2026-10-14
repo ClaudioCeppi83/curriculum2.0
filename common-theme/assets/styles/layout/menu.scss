@@ -1,100 +1,118 @@
+// Slide-over Navigation Menu
 .l-menu {
   --gap: var(--theme-spacing--gutter);
-  @include grid-assign(heading, action, primary, secondary, container);
   overflow-x: hidden;
   overflow-y: auto;
   position: fixed;
   top: 0;
-  right: 100%;
+  right: 0;
   visibility: hidden;
+  width: 100%;
+  max-width: 440px;
   height: 100dvh;
-  z-index: 40;
-  background-image: linear-gradient(
-    -45deg,
-    var(--theme-color--block),
-    var(--theme-color--paper)
-  );
-  box-shadow: var(--theme-box-shadow);
+  z-index: 50;
+  background-color: var(--theme-color--block);
+  border-left: 1px solid var(--theme-color--outline);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
 
   &.is-active {
     visibility: visible;
-    right: 0;
+    transform: translateX(0);
     outline: none;
-    animation: slide-menu 0.5s ease-out forwards;
   }
-
-  grid-template:
-    ". container . " calc(100vh - calc(100vh - 100%)) / minmax(
-      var(--theme-spacing--gutter),
-      1fr
-    )
-    auto
-    minmax(var(--theme-spacing--gutter), 1fr);
 
   &__container {
-    display: grid;
-    grid-template:
-      ". .......   ......... ." var(--theme-spacing--1)
-      ". heading   action    ." min-content
-      ". .......   ......... ." var(--gap)
-      ". primary   primary   ." 1fr
-      ". secondary secondary ." min-content
-      ". .......   ......... ." var(--gap) /
-      var(--gap) 1fr
-      var(--theme-spacing--touchtarget) var(--gap);
-    align-items: center;
-  }
-
-  &__action {
-    border-radius: 0;
-    --button-padding: 0;
-    margin: 0 0 auto auto;
-    width: fit-content;
-    min-width: fit-content;
-  }
-
-  &__link {
-    @include on-event {
-      text-decoration: underline dotted var(--theme-color--accent);
-    }
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 2rem 2rem 2.5rem 2rem;
   }
 
   &__heading {
-    line-height: 1.2;
-    text-shadow: -2px 1px 0 var(--theme-color--pop);
+    display: none;
   }
-  &__home {
-    @include on-event {
-      outline: 1px dotted;
-      color: var(--theme-color--accent);
+
+  &__action {
+    align-self: flex-end;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--theme-color--brand-tint);
+    border: 1px solid var(--theme-color--outline);
+    color: var(--theme-color--ink);
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      color: var(--theme-color--brand);
+      border-color: var(--theme-color--brand);
+      transform: rotate(90deg);
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
     }
   }
 
   &__primary {
-    display: grid;
-    align-self: stretch;
-    place-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  &__item {
+    margin: 0;
+  }
+
+  &__link {
+    display: block;
+    font-family: var(--theme-font--display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--theme-color--ink);
+    text-decoration: none;
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background-color: var(--theme-color--brand-tint);
+      color: var(--theme-color--brand);
+      padding-left: 1.15rem;
+      text-decoration: none;
+    }
   }
 
   &__secondary {
+    list-style: none;
+    padding: 1.5rem 0 0 0;
+    margin: 2rem 0 0 0;
+    border-top: 1px solid var(--theme-color--outline);
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: var(--theme-spacing--gutter);
-  }
-}
+    flex-direction: column;
+    gap: 0.5rem;
 
-@keyframes slide-menu {
-  0% {
-    transform: translateX(100vw);
-  }
-  40% {
-    transform: translateX(100vw);
-  }
-  50% {
-    transform: translateX(100vw);
-  }
-  100% {
-    transform: translateX(0);
+    .l-menu__link {
+      font-family: var(--theme-font--copy);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--theme-color--ink-secondary);
+      padding: 0.4rem 0.6rem;
+
+      &:hover {
+        color: var(--theme-color--brand);
+        background-color: transparent;
+      }
+    }
   }
 }

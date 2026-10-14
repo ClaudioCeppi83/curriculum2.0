@@ -1,22 +1,33 @@
+// Breadcrumbs Component
 .c-breadcrumbs {
+  margin-bottom: var(--theme-spacing--2);
+
   &__list {
     display: flex;
     align-items: center;
-    gap: var(--theme-spacing--1);
-    font: var(--theme-font--system);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--theme-font--copy);
     font-size: var(--theme-type-size--6);
+    font-weight: 500;
+    color: var(--theme-color--ink-fade);
+    padding: 0;
+    margin: 0;
+    list-style: none;
   }
 
   &__link {
     display: inline-flex;
     align-items: center;
     white-space: nowrap;
-    @include on-event {
-      text-decoration: overline 3px solid var(--theme-color--accent);
+    color: var(--theme-color--ink-fade);
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--theme-color--brand);
       outline: none;
-      .c-breadcrumbs__icon {
-        color: var(--theme-color--pop);
-      }
     }
   }
 
@@ -32,7 +43,9 @@
   }
 
   &__icon {
-    height: 1em;
-    min-width: 6px;
+    display: inline-flex;
+    align-items: center;
+    color: var(--theme-color--outline);
+    font-size: 0.75rem;
   }
 }

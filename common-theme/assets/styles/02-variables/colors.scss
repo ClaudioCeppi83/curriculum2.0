@@ -1,67 +1,64 @@
 @mixin light-palette {
-  // these brand colours are set and then everything else is derived from the key
-  --theme-color--brand: rgb(21, 212, 190);
-  --theme-color--brand-shade: rgba(21, 212, 190, .05);
-  --theme-color--accent: rgb(21, 212, 190);
-  --theme-color--accent-shade: hsla(146, 100%, 46%, 0.5);
-  --theme-color--pop: rgb(61, 97, 255);
-  // key
-  --hue: 210;
-  --sat: 35%;
-  --lum: 90%;
-  --alpha: 0.95;
-  --hsl: var(--hue), var(--sat), var(--lum);
-  // now build all the shades
-  --theme-color--paper: hsla(
-    var(--hue),
-    calc(var(--sat) * 1.2),
-    calc(var(--lum) * 1.06),
-    var(--alpha)
-  );
-  --theme-color--ink: hsla(
-    var(--hue),
-    calc(var(--sat) * 2.2),
-    calc(var(--lum) * 0.3),
-    var(--alpha)
-  );
-  --theme-color--ink-fade: hsla(
-    var(--hue),
-    calc(var(--sat) * 2.2),
-    calc(var(--lum) * 0.3),
-    calc(var(--alpha) * 0.3)
-  );
-  --theme-color--paper-fade: hsla(
-    var(--hue),
-    calc(var(--sat) * 1.2),
-    calc(var(--lum) * 1.06),
-    0.9
-  );
-  --theme-color--contrast-max: hsl(
-    var(--hue),
-    calc(var(--sat) / 100),
-    calc(var(--lum) * 2) var(--alpha)
-  );
+  // MigraCode Barcelona Official Brand Identity Tokens
+  --theme-color--brand: #00bfa5;
+  --theme-color--brand-text: #0f766e;
+  --theme-color--brand-shade: rgba(0, 191, 165, 0.08);
+  --theme-color--accent: #00bfa5;
+  --theme-color--accent-shade: rgba(0, 191, 165, 0.15);
+  --theme-color--pop: #f97316; // Warm Terracotta accent for active milestones
 
-  // backdrop
-  --theme-color--block: hsla(var(--hsl), var(--alpha));
-  --theme-color--outline: hsl(var(--hsl), 1);
-  --theme-color--backdrop-from: hsl(var(--hsl) / 0.25);
-  --theme-color--backdrop-to: hsl(var(--hsl) / 0.2);
+  // HSL Key (Clean Slate 50 base)
+  --hue: 215;
+  --sat: 16%;
+  --lum: 97%;
+  --alpha: 0.98;
+  --hsl: var(--hue), var(--sat), var(--lum);
+
+  // Surfaces & Canvas
+  --theme-color--paper: #f8fafc;
+  --theme-color--paper-fade: rgba(248, 250, 252, 0.85);
+  --theme-color--block: #ffffff;
+  --theme-color--outline: #e2e8f0;
+
+  // Typography Contrast (WCAG AAA)
+  --theme-color--ink: #0f172a;
+  --theme-color--ink-fade: #475569;
+  --theme-color--contrast-max: #000000;
+
+  // Backdrops & subtle gradients
+  --theme-color--backdrop-from: rgba(248, 250, 252, 0.8);
+  --theme-color--backdrop-to: rgba(241, 245, 249, 0.9);
 }
 
 @mixin dark-palette {
-  --hue: 270;
-  --sat: 8%;
-  --lum: 20%;
-  --alpha: 0.99;
-  --theme-color--ink: hsla(
-    calc(var(--hue) * 1.1),
-    calc(var(--sat) + 60%),
-    calc(var(--lum) * 4.4),
-    var(--alpha)
-  );
-  --theme-color--accent: rgb(21, 212, 190);
-  --theme-color--pop: hsl(246, 100%, 46%);
+  --theme-color--brand: #00bfa5;
+  --theme-color--brand-text: #2dd4bf;
+  --theme-color--brand-shade: rgba(0, 191, 165, 0.16);
+  --theme-color--accent: #00bfa5;
+  --theme-color--accent-shade: rgba(0, 191, 165, 0.25);
+  --theme-color--pop: #f97316;
+
+  // HSL Key (Slate 950 base)
+  --hue: 222;
+  --sat: 47%;
+  --lum: 8%;
+  --alpha: 0.98;
+  --hsl: var(--hue), var(--sat), var(--lum);
+
+  // Surfaces & Canvas
+  --theme-color--paper: #0b0f19;
+  --theme-color--paper-fade: rgba(11, 15, 25, 0.85);
+  --theme-color--block: #161f30;
+  --theme-color--outline: #1e293b;
+
+  // Typography Contrast
+  --theme-color--ink: #f8fafc;
+  --theme-color--ink-fade: #94a3b8;
+  --theme-color--contrast-max: #ffffff;
+
+  // Backdrops
+  --theme-color--backdrop-from: rgba(11, 15, 25, 0.8);
+  --theme-color--backdrop-to: rgba(22, 31, 48, 0.9);
 }
 
 :root {
@@ -70,6 +67,3 @@
     @include dark-palette();
   }
 }
-
-// see states for classes that toggle these
-// no classes in the variables folder

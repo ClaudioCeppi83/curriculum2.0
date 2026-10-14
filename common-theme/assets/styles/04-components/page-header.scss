@@ -1,3 +1,4 @@
+// Page Header Component (Lesson & Sprint Pages)
 .c-page-header {
   --gap: var(--theme-spacing--gutter);
 
@@ -73,47 +74,50 @@
         / 1fr;
     }
   }
+
   &__title {
     display: flex;
     flex-wrap: wrap;
     line-height: 1.15;
     word-break: break-word;
-    text-shadow: -2px 1px 0 var(--theme-color--pop);
-    background-color: var(--theme-color--block);
+    font-family: var(--theme-font--display);
+    font-weight: 700;
+    color: var(--theme-color--brand);
+    text-shadow: none;
     margin-bottom: var(--theme-spacing--1);
-    .c-page-header--splash & {
-      color: var(--theme-color--brand-text, var(--theme-color--brand));
-      background-color: transparent;
-      text-shadow: none;
-    }
   }
+
   &__subtitle {
     display: flex;
     width: max-content;
+    font-size: var(--theme-type-size--5);
+    color: var(--theme-color--ink-fade);
   }
 
   &__description {
-    font-weight: 300;
-  }
-  &__time {
-    display: inline-block;
+    font-size: var(--theme-type-size--5);
+    line-height: 1.5;
     color: var(--theme-color--ink);
-    font: var(--theme-font--system);
-    font-size: var(--theme-type-size--6);
-    background-color: var(--theme-color--outline);
-    margin-bottom: var(--theme-spacing--1);
-    padding: 2px 8px;
-    border-radius: 4px;
-    text-align: center;
+  }
 
-    @media (min-width: $c-med) {
-      width: auto;
-      min-width: var(--theme-type-size--1);
-    }
+  &__time {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-color--ink);
+    font-family: var(--theme-font--code, monospace);
+    font-size: var(--theme-type-size--6);
+    font-weight: 600;
+    background-color: var(--theme-color--brand-shade);
+    border: 1px solid var(--theme-color--outline);
+    margin-bottom: var(--theme-spacing--1);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    text-align: center;
   }
 
   &__breadcrumbs {
-    padding: 0 0 0 calc(var(--theme-type-size--1) + 5px); //TODO track down this magic number
+    padding: 0;
     z-index: 1;
     .c-page-header--splash & {
       display: none;

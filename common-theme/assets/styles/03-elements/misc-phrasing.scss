@@ -1,83 +1,112 @@
-// if it has a class we presume it's styled
-// just a bunch of small phrasing elements that markdown might generate
-// hugo has code highlighting built in so I've tweaked that here too
-
+// Phrasing and Inline Markdown Elements
 p {
-  line-height: 1.5;
+  line-height: 1.65;
+  color: var(--theme-color--ink);
+  margin: 0 0 1rem 0;
 }
 
 blockquote {
-  font-size: var(--theme-type-size--4);
-  margin: var(--theme-spacing--4) 0 var(--theme-spacing--6);
-  @include pattern(dots, var(--theme-color--pop), b, false, 0.2);
-  border-bottom: var(--theme-border--thick);
-  border-image: var(--theme-border-image);
+  font-size: var(--theme-type-size--5);
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background-color: var(--theme-color--brand-tint);
+  border-left: 4px solid var(--theme-color--brand);
+  border-radius: 0 8px 8px 0;
+  color: var(--theme-color--ink);
+  font-style: normal;
+
+  p {
+    margin: 0;
+  }
 }
 
 iframe {
-  max-width: 100%; //never break out right even if rogue devs add giant iframes
+  max-width: 100%;
+  border-radius: 8px;
 }
 
 code,
 .code,
-pre code .highlight pre,
+pre code,
+.highlight pre,
 time {
-  font: var(--theme-font--system);
+  font-family: var(--theme-font--code);
 }
+
 code:not([class]) {
-  color: var(--theme-color--pop);
-}
-//this .highlight is goldmark
-.highlight pre {
-  display: block;
-  padding: var(--theme-spacing--gutter);
-  overflow-x: auto;
-  margin: 0;
+  font-family: var(--theme-font--code);
+  font-size: 0.875em;
+  padding: 0.2em 0.45em;
+  border-radius: 6px;
+  background-color: var(--theme-color--brand-tint);
+  color: var(--theme-color--ink);
+  border: 1px solid var(--theme-color--outline-subtle);
+  font-weight: 500;
 }
 
+// Goldmark Code Highlight Blocks
 .highlight {
-  border: var(--theme-border);
-  padding: var(--theme-spacing--1);
-  max-width: var(--theme-spacing--linelength);
-  @include pattern(dots, currentColor, c, false);
-  margin-bottom: var(--theme-spacing--4);
+  border: 1px solid var(--theme-color--outline);
+  border-radius: 10px;
+  padding: 0;
+  background-color: var(--theme-color--block);
+  box-shadow: var(--theme-box-shadow);
+  max-width: 100%;
+  margin: 1.25rem 0 1.75rem 0;
+  overflow: hidden;
+
+  pre {
+    display: block;
+    padding: 1.25rem 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+    font-family: var(--theme-font--code);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
 }
 
-// details could show up in github flavoured markdown so we put a basic style on here
+// Modern Accessible Disclosures (details/summary)
 details {
+  border: 1px solid var(--theme-color--outline);
+  border-radius: 8px;
+  padding: 0.85rem 1.15rem;
+  margin-bottom: 1rem;
+  background-color: var(--theme-color--block);
   list-style: none;
-}
-summary {
-  margin-bottom: var(--theme-spacing--1);
-  cursor: pointer;
-  list-style: none;
-}
-summary > * {
-  display: inline-block;
-  margin: 0;
+
+  summary {
+    font-family: var(--theme-font--display);
+    font-weight: 600;
+    color: var(--theme-color--ink);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: "▶";
+      display: inline-block;
+      color: var(--theme-color--brand);
+      font-size: 0.75rem;
+      margin-right: 0.65rem;
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &[open] > summary::before {
+    transform: rotate(90deg);
+  }
 }
 
-details > summary::before {
-  content: "▶";
-  display: inline-block;
-  color: var(--theme-color--accent);
-  font-size: var(--theme-type-size--4);
-  transition: transform 0.5s cubic-bezier(0.4, 2.08, 0.55, 0.44);
-  margin: 0 var(--theme-spacing--1) 0 0;
-}
-details:hover summary::before {
-  color: var(--theme-color--pop);
-  transform: rotate(5deg) scale(1.1);
-}
-
-details[open] > summary::before {
-  transform: rotate(90deg);
-}
 hr {
   border: 0;
-  border-bottom: var(--theme-border--thick);
-  border-image: var(--theme-border-image);
-  margin: var(--theme-spacing--6)
-    calc(3 * calc(-1 * var(--theme-spacing--gutter)));
-  max-width: 50%;
+  border-top: 1px solid var(--theme-color--outline);
+  margin: 2.25rem 0;
+  width: 100%;
+  max-width: 100%;
 }

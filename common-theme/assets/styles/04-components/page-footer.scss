@@ -1,11 +1,44 @@
+// Page Bottom Navigation Component
 .c-page-footer {
-  padding-top: var(--theme-spacing--6);
+  padding: var(--theme-spacing--6) 0 var(--theme-spacing--4);
+  border-top: 1px solid var(--theme-color--outline);
+  margin-top: var(--theme-spacing--6);
+
   &__nav {
-    gap: var(--theme-spacing--1);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    text-transform: lowercase;
-    font: var(--theme-font--system);
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-family: var(--theme-font--copy);
+    font-size: var(--theme-type-size--6);
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--theme-color--outline);
+    background-color: var(--theme-color--block);
+    color: var(--theme-color--ink);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--theme-color--brand);
+      color: var(--theme-color--brand);
+      box-shadow: var(--theme-box-shadow--slim);
+      outline: none;
+    }
+  }
+
+  &__this {
+    color: var(--theme-color--ink-fade);
+    font-size: 0.8125rem;
+    font-weight: 500;
   }
 }

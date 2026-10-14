@@ -1,35 +1,85 @@
-// TODO I want to intercede in the gfm task list with a render hook as their version is not accessible
-// so I've left the classes off for now until I understand how to do this
+// Objectives and Success Checklist Component
 .c-objectives {
-  margin-bottom: var(--theme-spacing--gutter);
+  margin-bottom: 2rem;
+  background-color: var(--theme-color--block);
+  border: 1px solid var(--theme-color--outline);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--theme-box-shadow);
+
   &__title {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
+    font-family: var(--theme-font--display);
+    font-weight: 600;
+  }
+
+  h5 {
+    font-family: var(--theme-font--display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--theme-color--ink);
+    margin: 1.5rem 0 0.75rem 0;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--theme-color--outline-subtle);
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  &__list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
   }
 }
 
-// markdown checklist we are trying to hijack from gfm
-
+// Markdown checklist items
 li:has(input[type="checkbox"]) {
-  padding: 0;
-  margin: 0 0 var(--theme-spacing--1) 0;
+  display: flex;
+  align-items: flex-start;
+  padding: 0.6rem 0.75rem;
+  margin: 0 0 0.35rem 0;
+  border-radius: 8px;
   list-style: none;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: var(--theme-color--brand-tint);
+  }
+
   &::before {
     content: "☑️ ";
-    font-size: 22px;
+    font-size: 18px;
+    line-height: 1.4;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
   }
+
   label {
-    padding-left: calc(22px + 1ch);
-    margin-left: calc(-1 * calc(22px + 1ch));
+    padding-left: 0;
+    margin-left: 0;
     cursor: pointer;
+    font-family: var(--theme-font--copy);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--theme-color--ink);
   }
 }
+
 li:has(input[type="checkbox"]:checked) {
   &::before {
     content: "✅ ";
   }
+
+  label {
+    color: var(--theme-color--ink-secondary);
+  }
 }
+
 ul:has(input[type="checkbox"]) {
-  margin: 0 0 var(--theme-spacing--3) 0;
+  margin: 0 0 1rem 0;
+  padding: 0;
   input[type="checkbox"] {
     position: absolute;
     opacity: 0;

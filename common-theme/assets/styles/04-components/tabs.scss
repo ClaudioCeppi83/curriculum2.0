@@ -1,64 +1,64 @@
+// Tabs Component
 .c-tabs {
   display: block;
-  --outset: calc(-1 * var(--theme-spacing--gutter));
-  --tabline: 1px;
-  margin: 0 var(--outset) var(--theme-spacing--gutter);
+  margin: 1.5rem 0 2rem 0;
 
   &__list {
     display: flex;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--theme-color--outline);
+    padding: 0;
+    margin: 0;
+    list-style: none;
   }
+
   &__tab {
     cursor: pointer;
     font-family: var(--theme-font--display);
-    transform: translateY(2px);
-    padding: var(--theme-spacing--1) var(--theme-spacing--2);
-    border-top: var(--tabline) solid var(--theme-color--outline);
-    border-right: var(--tabline) solid var(--theme-color--outline);
-    border-bottom: none;
-    border-left: var(--tabline) solid var(--theme-color--outline);
-    background: var(--theme-color--paper);
-    box-shadow: var(--theme-box-shadow--top);
-    color: currentColor;
-    place-content: center;
-    transform: translateY(5px);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    background: transparent;
+    color: var(--theme-color--ink-secondary);
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--theme-color--brand);
+    }
+
     &.is-active,
-    &:hover,
     &:focus {
-      z-index: 2;
-      transform: translateY(3px) scale(1.01);
-      box-shadow: 0 -2px 0 var(--theme-color--accent);
+      color: var(--theme-color--brand);
+      border-bottom-color: var(--theme-color--brand);
       font-weight: 600;
+      outline: none;
     }
   }
+
   &__group {
     display: grid;
     grid-template: "tab";
-    padding: var(--tabline);
+    margin-top: 1.25rem;
   }
 
   &__panel {
     grid-area: tab;
-    padding: var(--theme-spacing--4) var(--theme-spacing--gutter);
-    background: var(--theme-color--paper);
-    box-shadow: var(--theme-box-shadow--slim);
-    border-radius: var(--theme-border-radius);
-    border-top-left-radius: 0;
+    padding: 1.5rem;
+    background-color: var(--theme-color--block);
+    border: 1px solid var(--theme-color--outline);
+    border-radius: 12px;
+    box-shadow: var(--theme-box-shadow);
     opacity: 0;
-    overflow-x: scroll;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s;
 
     &.is-active {
       opacity: 1;
+      visibility: visible;
       z-index: 1;
-    }
-    //not keen on this, might be time to start breaking out these components
-    .c-block__series--timeline & {
-      margin-bottom: var(--outset);
-      box-shadow: var(--theme-box-shadow--top);
-    }
-    &--pd {
-      .c-block__series--timeline & {
-        box-shadow: var(--theme-box-shadow--slim);
-      }
     }
   }
 }
