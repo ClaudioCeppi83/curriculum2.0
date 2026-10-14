@@ -1,8 +1,14 @@
+/**
+ * @fileoverview Custom element <toggle-all-details> expanding/collapsing all <details> elements on page.
+ */
+
 class ToggleAllDetails extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
     this.toggleDetails = this.toggleDetails.bind(this);
+    this.details = [];
+    this.toggleButton = null;
   }
 
   connectedCallback() {
@@ -13,11 +19,11 @@ class ToggleAllDetails extends HTMLElement {
   }
 
   disconnectedCallback() {
-    this.toggleButton.removeEventListener("click", this.toggleDetails);
+    this.toggleButton?.removeEventListener("click", this.toggleDetails);
   }
 
   cacheDOM() {
-    this.details = [...document.querySelectorAll("details")];
+    this.details = Array.from(document.querySelectorAll("details"));
     this.toggleButton = this.querySelector('[slot="button"]');
   }
 
@@ -34,7 +40,7 @@ class ToggleAllDetails extends HTMLElement {
   }
 
   toggleOnHashChange() {
-    if (location.hash === "#toggle-details") {
+    if (window.location.hash === "#toggle-details") {
       this.toggleDetails();
     }
   }
@@ -44,4 +50,6 @@ class ToggleAllDetails extends HTMLElement {
   }
 }
 
-customElements.define("toggle-all-details", ToggleAllDetails);
+if (!customElements.get("toggle-all-details")) {
+  customElements.define("toggle-all-details", ToggleAllDetails);
+}

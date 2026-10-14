@@ -20,7 +20,7 @@ func main() {
 	flag.StringVar(&rootExcludes, "exclude-roots", "", "Directories in the root to ignore (comma-separated)")
 	flag.Parse()
 
-	excudedDirectories := computeExcludedDirectories(rootDirectory, rootExcludes)
+	excludedDirectories := computeExcludedDirectories(rootDirectory, rootExcludes)
 
 	sawBadFile := false
 	err := filepath.WalkDir(rootDirectory, func(path string, d fs.DirEntry, err error) error {
@@ -28,7 +28,7 @@ func main() {
 			return err
 		}
 
-		if excudedDirectories[path] {
+		if excludedDirectories[path] {
 			return fs.SkipDir
 		}
 
@@ -93,6 +93,7 @@ var modulesWithoutThemes = map[string]struct{}{
 	"induction":                {},
 	"portfolio":                {},
 	"the-launch":               {},
+	"org-cyf-launch":           {},
 }
 
 func isModuleWithoutThemes(path string) bool {
@@ -101,7 +102,11 @@ func isModuleWithoutThemes(path string) bool {
 	if pathPartsCount < 4 {
 		return false
 	}
-	_, isModuleWithoutTheme := modulesWithoutThemes[pathParts[pathPartsCount-4]]
+	moduleName := pathParts[pathPartsCount-4]
+	if moduleName == "content" && pathPartsCount >= 5 {
+		moduleName = pathParts[pathPartsCount-5]
+	}
+	_, isModuleWithoutTheme := modulesWithoutThemes[moduleName]
 	return isModuleWithoutTheme
 }
 

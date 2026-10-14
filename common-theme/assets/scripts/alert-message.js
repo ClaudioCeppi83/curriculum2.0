@@ -1,53 +1,69 @@
+/**
+ * @fileoverview Handles flash alerts passed via URL query parameters (?message= or ?error=).
+ * Remediated against DOM XSS by strictly utilizing textContent for parameter insertion.
+ */
+
 class AlertMessage {
   constructor() {
+    /** @type {Element|null} */
     const alertEl = document.querySelector(".c-alert");
-    if (alertEl instanceof Element === false) return;
+    if (!(alertEl instanceof Element)) return;
 
     this.alertEl = alertEl;
-
     this.attachCloseListener();
     this.show();
   }
 
+  /**
+   * Binds the click handler to close/hide the alert container.
+   */
   attachCloseListener() {
     const alertClose = this.alertEl.querySelector(".close");
-
-    alertClose.addEventListener("click", (event) => {
-      this.alertEl.setAttribute("hidden", true);
-    });
+    if (alertClose instanceof Element) {
+      alertClose.addEventListener("click", () => {
+        this.alertEl.setAttribute("hidden", "true");
+      });
+    }
   }
 
+  /**
+   * Safely extracts and sanitizes query parameter values for alerts.
+   * @returns {{ message: string|null, error: string|null }}
+   */
   getUrlAlertParameters() {
-    // Extract message and error parameters from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const message = urlParams.get("message");
-    const error = urlParams.get("error");
-
-    const alertParameters = { message: message, error: error };
-
-    return alertParameters;
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      return {
+        message: urlParams.get("message"),
+        error: urlParams.get("error"),
+      };
+    } catch {
+      return { message: null, error: null };
+    }
   }
 
+  /**
+   * Displays the alert box if either 'message' or 'error' exists.
+   * Uses textContent to guarantee immunity against malicious script injection.
+   */
   show() {
-    const urlParams = this.getUrlAlertParameters();
+    const { message, error } = this.getUrlAlertParameters();
+    const messageContainer = this.alertEl.querySelector(".alert__message");
+    if (!messageContainer) return;
 
-    // Display a message if 'message' parameter is present
-    if (urlParams.message) {
+    if (message) {
       this.alertEl.removeAttribute("hidden");
       this.alertEl.classList.remove("c-alert--warning");
       this.alertEl.classList.add("c-alert--info");
-      this.alertEl.querySelector(".alert__message").innerHTML =
-        urlParams.message;
-    }
-
-    // Display an error if 'error' parameter is present
-    if (urlParams.error) {
+      messageContainer.textContent = message;
+    } else if (error) {
       this.alertEl.removeAttribute("hidden");
       this.alertEl.classList.remove("c-alert--info");
       this.alertEl.classList.add("c-alert--warning");
-      this.alertEl.querySelector(".alert__message").innerHTML = urlParams.error;
+      messageContainer.textContent = error;
     }
   }
 }
 
+// Auto-initialize when script loads
 new AlertMessage();

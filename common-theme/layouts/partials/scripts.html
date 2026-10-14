@@ -1,25 +1,31 @@
-{{/* global */}}
-{{ $scripts := resources.Get "scripts/app.js" | resources.Minify }}
-{{/* temporarily load scripts until we track down this page store problem
-  https://discourse.gohugo.io/t/page-store-is-sometimes-empty-for-unclear-reasons/44950
+{{/*
+  Global Scripts Partial
+  Loads compiled and minified theme scripts and custom organization scripts.
+  
+  Note on Dark Mode: dark-mode.js is loaded synchronously in the head/body flow
+  to prevent theme flicker (FOUC) before DOM render, while all other scripts
+  are deferred for optimal performance.
 */}}
+{{ $scripts := resources.Get "scripts/app.js" | resources.Minify }}
 <script src="{{ $scripts.RelPermalink }}" defer></script>
+
 {{ $player := resources.Get "scripts/youtube-player.js" | resources.Minify }}
 <script src="{{ $player.RelPermalink }}" defer></script>
+
 {{ $tabs := resources.Get "scripts/tab-panels.js" | resources.Minify }}
 <script src="{{ $tabs.RelPermalink }}" type="module" defer></script>
+
+{{/* Synchronous execution avoids theme flash */}}
 {{ $darkmode := resources.Get "scripts/dark-mode.js" | resources.Minify }}
 <script src="{{ $darkmode.RelPermalink }}"></script>
+
 {{ $alertmessage := resources.Get "scripts/alert-message.js" | resources.Minify }}
 <script src="{{ $alertmessage.RelPermalink }}" defer></script>
 
-{{/*  if there is custom js to, load here, but if it's a component please contribute it back to the commons  */}}
-
+{{/* Custom organization scripts (e.g. org-cyf-itp) */}}
 {{ $customJs := resources.Match "custom-scripts/**.js" }}
 {{ with $customJs }}
   {{ $concatenated := $customJs | resources.Concat "custom.js" }}
   {{ $minified := $concatenated | minify | fingerprint "md5" }}
   <script src="{{ $minified.RelPermalink }}" defer></script>
 {{ end }}
-
-

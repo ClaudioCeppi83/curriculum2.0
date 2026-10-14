@@ -1,15 +1,20 @@
+{{/*
+  Partial: breadcrumbs.html
+  Renders responsive breadcrumb trail and matching Schema.org BreadcrumbList JSON-LD.
+  Filters modules and sprints for Pagefind facets.
+*/}}
 {{ with .Parent }}
-  <nav class="c-breadcrumbs">
+  <nav class="c-breadcrumbs" aria-label="Breadcrumb navigation">
     <ol class="c-breadcrumbs__list">
       {{- range after 1 .Ancestors.Reverse }}
         <li class="c-breadcrumbs__item">
           <a
             class="c-breadcrumbs__link"
             href="{{ .RelPermalink }}"
-            {{- if eq (len .Ancestors) 1 -}}
+            {{- if eq (len .Ancestors) 1 }}
               data-pagefind-filter="module"
-            {{- end -}}
-            ><span class="c-breadcrumbs__text">{{ .Title }}</span>
+            {{- end }}>
+            <span class="c-breadcrumbs__text">{{ .Title }}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -17,11 +22,9 @@
               width="24px"
               stroke-width="1.5"
               stroke="currentColor"
-              class="c-breadcrumbs__icon">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              class="c-breadcrumbs__icon"
+              aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
           </a>
         </li>
@@ -31,48 +34,43 @@
           <a
             class="c-breadcrumbs__link"
             href="{{ .RelPermalink }}"
-            {{- if in .Title "Sprint" -}}
+            {{- if in .Title "Sprint" }}
               data-pagefind-filter="sprint"
-            {{- end -}}
-            >{{ .Title }}</a
-          >
+            {{- end }}>
+            {{ .Title }}
+          </a>
         </li>
       {{ end }}
     </ol>
   </nav>
-  {{/* Here's a tiny drop of structured data for google's hungry maw
-    https://developers.google.com/search/docs/appearance/structured-data/breadcrumb
-    https://search.google.com/test/rich-results/
-    We only show the JSON if we show the HTML or we get dinged
-    Note that we must NOT quote the url inside this JSON or Hugo will escape the backslashes
-    https://www.godo.dev/tutorials/hugo-fix-json-ld-escaping/
-  */}}
+
+  {{/* Schema.org BreadcrumbList JSON-LD for Search Engines */}}
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {{ range $index, $element := .Ancestors.Reverse }}
-    {
-      "@type": "ListItem",
-      "position": {{add 1 $index}},
-      "name": "{{- .Title -}}",
-      "item": {{- .Permalink -}}
-    },
-    {{- end -}}
-    {
-      "@type": "ListItem",
-      "position": {{ add 2 (len .Ancestors) }},
-      "name": "{{.Title}}",
-      "item": {{- .Permalink -}}
-    },
-    {
-      "@type": "ListItem",
-      "position": {{ add 3 (len .Ancestors)}},
-      "name": "{{$.Page.Title}}",
-      "item": {{- .Permalink -}}
-    }
-  ]
-}
-</script>
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {{ range $index, $element := .Ancestors.Reverse }}
+      {
+        "@type": "ListItem",
+        "position": {{ add 1 $index }},
+        "name": {{- .Title | jsonify -}},
+        "item": {{- .Permalink -}}
+      },
+      {{ end }}
+      {
+        "@type": "ListItem",
+        "position": {{ add 2 (len .Ancestors) }},
+        "name": {{- .Title | jsonify -}},
+        "item": {{- .Permalink -}}
+      },
+      {
+        "@type": "ListItem",
+        "position": {{ add 3 (len .Ancestors) }},
+        "name": {{- $.Page.Title | jsonify -}},
+        "item": {{- .Permalink -}}
+      }
+    ]
+  }
+  </script>
 {{ end }}

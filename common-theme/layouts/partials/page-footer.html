@@ -1,22 +1,28 @@
-{{/* Section navigation  and other tiny tips */}}
-{{ if or .IsSection  .IsPage }}
+{{/*
+  Page Bottom Footer Partial
+  Provides sequential pagination navigation between siblings in the current curriculum section.
+  Includes W3C ARIA landmarks and aria-hidden visual directional indicators.
+*/}}
+{{ if or .IsSection .IsPage }}
   <footer class="c-page-footer">
-    <nav class="c-page-footer__nav">
+    <nav class="c-page-footer__nav" aria-label="Pagination navigation">
       {{ $pages := .Page.Parent.Pages.Reverse }}
       {{ with $pages.Prev . }}
         <a
           class="c-page-footer__prev c-page-footer__link e-link"
           href="{{ .RelPermalink }}"
-          >{{ .Title }}</a
-        >←
+          aria-label="Previous page: {{ .Title }}">
+          <span aria-hidden="true">&larr; </span>{{ .Title }}
+        </a>
       {{ end }}
-      <span class="c-page-footer__this">{{ .Title }}</span>
+      <span class="c-page-footer__this" aria-current="page">{{ .Title }}</span>
       {{ with $pages.Next . }}
-        →<a
+        <a
           class="c-page-footer__next c-page-footer__link e-link"
           href="{{ .RelPermalink }}"
-          >{{ .Title }}</a
-        >
+          aria-label="Next page: {{ .Title }}">
+          {{ .Title }}<span aria-hidden="true"> &rarr;</span>
+        </a>
       {{ end }}
     </nav>
   </footer>

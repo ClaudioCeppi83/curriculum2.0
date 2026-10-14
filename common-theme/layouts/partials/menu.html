@@ -1,6 +1,11 @@
+{{/*
+  Main Site Navigation Menu Partial
+  Renders the collapsible slide-over menu populated from site.Menus (syllabus and secondary).
+  Fully keyboard accessible with focus management and ARIA landmark support.
+*/}}
 <nav
   class="l-layout__menu l-menu"
-  aria-label="Main Site Links."
+  aria-label="Main Navigation"
   id="site-menu"
   hidden
   tabindex="0">
@@ -9,10 +14,11 @@
       <a href="/" class="l-menu__home is-invisible">Menu</a>
     </h2>
     <button
+      type="button"
       class="l-menu__action e-button e-button--icon js-menu-toggle e-heading__2"
       id="close-menu"
       aria-label="Close Navigation Menu">
-      ❎
+      <span aria-hidden="true">❎</span>
       <span class="is-invisible">Close Menu.</span>
     </button>
     <ul class="l-menu__primary">

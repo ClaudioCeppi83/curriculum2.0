@@ -1,10 +1,13 @@
+{{/*
+  Site Top Header Partial
+  Contains the organization logo (SVG matching), the search component input,
+  and the accessible hamburger toggle button for the navigation drawer.
+*/}}
 <header class="l-layout__header l-header">
   <div class="l-header__container">
     <h1 class="l-header__heading e-heading__6" data-pagefind-ignore>
-      <a class="l-header__home" href="/"
-        ><span class="is-invisible"
-          >{{ .Section }} {{ .Title }} {{ site.Title }}</span
-        >
+      <a class="l-header__home" href="/">
+        <span class="is-invisible">{{ .Section }} {{ .Title }} {{ site.Title }}</span>
         {{ $logos := resources.Match "custom-images/site-logo/*.svg" }}
         {{ range $logos }}{{ .Content | safeHTML }}{{ end }}
       </a>
@@ -15,7 +18,7 @@
       id="open-menu"
       aria-label="Open Navigation Menu"
       class="l-header__action e-button e-button--icon js-menu-toggle e-heading__3">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24">
+      <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24">
         <path
           stroke="var(--theme-color--ink)"
           stroke-linecap="round"

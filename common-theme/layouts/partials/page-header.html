@@ -1,70 +1,69 @@
-{{/* This giant chunk of logic is all about whether to produce a table of contents */}}
+{{/*
+  Partial: page-header.html
+  Renders the primary hero/page header, including breadcrumbs, title with emoji,
+  optional subtitle or GitHub backlog links, and an integrated Table of Contents (TOC).
+*/}}
+
+{{/* 1. Evaluate whether this page requires a Table of Contents */}}
 {{ $hasTOC := false }}
 {{ $mdTOC := false }}
 {{ $blockTOC := false }}
 {{ $headerClass := .Scratch.Get "headerClass" }}
-{{ $forcedHeadings := .Page.Scratch.Get "tocList"}}
-{{/*  if we have a long page and table of contents is turned on in hugo.toml, 
-or is we have made a forced list of headings,
-then go ahead and make a TOC */}}
-{{ if or $forcedHeadings (and
-  (gt .Page.WordCount 400) (.Page.TableOfContents))
-}}
+{{ $forcedHeadings := .Page.Scratch.Get "tocList" }}
+
+{{/* Markdown TOC enabled for lengthy content (>400 words) or when forced */}}
+{{ if or $forcedHeadings (and (gt .Page.WordCount 400) .Page.TableOfContents) }}
   {{ $hasTOC = true }}
   {{ $mdTOC = true }}
 {{ end }}
-{{/*  if we have a prep or dayplan layout AND more than one block, then TOC  */}}
-{{ if and (or (eq .Layout "prep") (eq .Layout "day-plan") ) (gt .Params.blocks 1) }}
+
+{{/* Block-based TOC for Prep and Day-Plan pedagogical formats */}}
+{{ if and (or (eq .Layout "prep") (eq .Layout "day-plan")) (gt .Params.blocks 1) }}
   {{ $hasTOC = true }}
   {{ $mdTOC = true }}
   {{ $blockTOC = true }}
 {{ end }}
-<header
-  class="c-page-header {{ if $headerClass }}
-    {{ $headerClass }}
-  {{ end }} {{ if $hasTOC }}c-page-header--toc{{ end }}">
-  <!-- content -->
+
+<header class="c-page-header{{ with $headerClass }} {{ . }}{{ end }}{{ if $hasTOC }} c-page-header--toc{{ end }}">
   <div class="c-page-header__container">
+    {{/* Navigation Breadcrumbs */}}
     <div class="c-page-header__breadcrumbs">
       {{ partial "breadcrumbs.html" . }}
     </div>
-    <h1 class="c-page-header__title e-heading__1" 
-    {{- if in (slice "backlog" "day plan" "prep" "success" "product") .Page.Layout -}}
-          data-pagefind-filter="view"
-        {{ end }}
+
+    {{/* Primary Page Heading */}}
+    <h1
+      class="c-page-header__title e-heading__1"
+      {{- if in (slice "backlog" "day plan" "prep" "success" "product") .Page.Layout }}
+        data-pagefind-filter="view"
+      {{- end }}
       data-pagefind-weight="10">
       <span class="c-emoji">
         {{ $override := .Scratch.Get "emoji" }}
         {{ if $override }}
           {{ $override }}
         {{ else }}
-          {{ with .Page.Params.emoji }}
-            {{ . }}
-          {{ end }}
-           {{ if and (eq .Page.Params.layout "prep") (.Page.Params.blocks) }}
+          {{ with .Page.Params.emoji }}{{ . }}{{ end }}
+          {{ if and (eq .Page.Params.layout "prep") .Page.Params.blocks }}
             <time-total class="c-page-header__time"></time-total>
-      {{ end }}
-        {{ end }} 
-        </span>
-        <span class="c-page-header__title-text">{{ .Page.Title }}</span>
-               
+          {{ end }}
+        {{ end }}
+      </span>
+      <span class="c-page-header__title-text">{{ .Page.Title }}</span>
     </h1>
+
+    {{/* Subtitle: Direct GitHub issues link for backlogs or descriptive subtitle */}}
     {{ if eq .Page.Params.layout "backlog" }}
-      <h2
-        class="c-page-header__subtitle c-page-header__backlog e-heading__3"
-        data-pagefind-weight="0.5">
-        {{ $repos := .Page.Params.backlog | default ""}}
-        {{ if not (reflect.IsSlice $repos)}}
-          {{ $repos = slice .Page.Params.backlog}}
-        {{ end}}
-        {{ range $repos}}
-        <a
-          class="c-page-header__link"
-          href="{{ site.Params.org }}/{{ . }}/issues"
-          > {{ . }}
-          🔗 </a
-        >&nbsp; 
-        {{ end}}
+      <h2 class="c-page-header__subtitle c-page-header__backlog e-heading__3" data-pagefind-weight="0.5">
+        {{ $repos := .Page.Params.backlog | default "" }}
+        {{ if not (reflect.IsSlice $repos) }}
+          {{ $repos = slice .Page.Params.backlog }}
+        {{ end }}
+        {{ range $repos }}
+          <a class="c-page-header__link" href="{{ site.Params.org }}/{{ . }}/issues" target="_blank" rel="noopener noreferrer">
+            {{ . }} 🔗
+          </a>&nbsp;
+        {{ end }}
       </h2>
     {{ else }}
       {{ with .Page.Description }}
@@ -73,17 +72,14 @@ then go ahead and make a TOC */}}
         </h2>
       {{ end }}
     {{ end }}
-    <!--TOC-->
-    {{/*  We do all that logic up top because here
-    we need to merge in the TOC from the markdown 
-    and the TOC created from blocks set in front matter, 
-    that Hugo can't see by default.  */}}
+
+    {{/* Table of Contents (Merged Markdown + Front-matter Block entries) */}}
     {{ if $hasTOC }}
-      <div class="c-page-header__toc " id="toc">
-        <section class="c-toc" aria-label="Table of contents.">
-          <a id="top" class="c-toc__top e-button e-button--icon" href="#toc"
-            >🔖 <span class="is-invisible">back to top</span></a
-          >
+      <div class="c-page-header__toc" id="toc">
+        <section class="c-toc" aria-label="Table of contents">
+          <a id="top" class="c-toc__top e-button e-button--icon" href="#toc" aria-label="Back to table of contents">
+            🔖 <span class="is-invisible">Back to top</span>
+          </a>
           {{ if $mdTOC }}
             {{ .Page.TableOfContents }}
           {{ end }}
@@ -91,17 +87,15 @@ then go ahead and make a TOC */}}
             <ol>
               {{ range .Params.blocks }}
                 <li>
-                  <a href="#{{ .name | urlize }}" data-pagefind-weight="5"
-                    >{{ .name }}</a
-                  >
-                  {{ if "youtu" | in .src }}📼{{ end }}
+                  <a href="#{{ .name | urlize }}" data-pagefind-weight="5">{{ .name }}</a>
+                  {{ if in .src "youtu" }}📼{{ end }}
                 </li>
               {{ end }}
             </ol>
           {{ end }}
           {{ with $forcedHeadings }}
             <ol>
-            {{ range . }}
+              {{ range . }}
                 <li><a href="#{{ . | urlize }}" data-pagefind-weight="5">{{ . }}</a></li>
               {{ end }}
             </ol>
@@ -109,6 +103,5 @@ then go ahead and make a TOC */}}
         </section>
       </div>
     {{ end }}
-
   </div>
 </header>
