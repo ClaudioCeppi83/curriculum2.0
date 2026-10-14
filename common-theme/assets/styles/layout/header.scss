@@ -1,55 +1,123 @@
+// Header Component & Desktop Navigation Bar
 .l-header {
-  @include grid-assign(heading, search, action, container);
-
-  @include backdrop(true, true, 0.7);
-  background-color: var(--theme-color--paper);
-  color: var(--theme-color--accent);
   position: sticky;
   top: 0;
-  z-index: 30;
-  box-shadow: var(--theme-box-shadow);
-  grid-template:
-    " . ......... . " var(--theme-spacing--1)
-    " . container ." minmax(0, 1fr)
-    " . ......... ." var(--theme-spacing--1)
-    / minmax(var(--theme-spacing--gutter), 1fr) var(--theme-spacing--container) minmax(var(--theme-spacing--gutter), 1fr);
+  z-index: 50;
+  background-color: var(--theme-color--block);
+  border-bottom: 1px solid var(--theme-color--outline);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  width: 100%;
 
   &__container {
-    display: grid;
-    grid-template:
-      "heading . search action" min-content
-      / max-content var(--theme-spacing--4) 1fr
-      min-content;
-  }
-  &__heading {
-    color: var(--theme-color--brand);
-    display: grid;
+    max-width: var(--theme-spacing--container);
+    margin: 0 auto;
+    padding: 0.65rem var(--theme-spacing--gutter);
+    display: flex;
     align-items: center;
-    @media (min-width: $c-max) {
-      width: 140px;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    flex-shrink: 0;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    svg {
+      height: 36px;
+      width: auto;
+      display: block;
     }
   }
 
   &__home {
     @include on-event {
-      color: var(--theme-color--accent);
       outline: none;
     }
   }
-  &__search {
-    position: relative;
+
+  // Desktop Navigation Bar Links
+  &__nav {
+    display: none;
+
+    @media (min-width: 992px) {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-left: 0.75rem;
+    }
+
+    &-link {
+      font-family: var(--theme-font--display);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--theme-color--ink);
+      text-decoration: none;
+      padding: 0.4rem 0.65rem;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+
+      &:hover {
+        color: var(--theme-color--brand-text, var(--theme-color--brand));
+        background-color: var(--theme-color--brand-tint);
+        text-decoration: none;
+      }
+    }
   }
-  &__action {
-    transform: translateX(
-      calc(
-        calc(var(--theme-spacing--touchtarget) / 2) - var(--theme-spacing--1)
-      )
-    );
+
+  // Centered Search Input
+  &__search {
+    flex: 1;
+    max-width: 280px;
+    margin-left: auto;
+
+    @media (max-width: 640px) {
+      max-width: 160px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  &__btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--theme-color--paper);
+    border: 1px solid var(--theme-color--outline);
+    color: var(--theme-color--ink);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 0;
+
+    &:hover {
+      border-color: var(--theme-color--brand);
+      color: var(--theme-color--brand);
+      transform: translateY(-1px);
+      box-shadow: var(--theme-box-shadow);
+    }
+
+    svg {
+      display: block;
+    }
   }
 }
-// post header height to other elements
+
 :root {
-  --header-height: calc(
-    var(--theme-spacing--touchtarget) + calc(var(--theme-spacing--1) * 2)
-  );
+  --header-height: 60px;
 }

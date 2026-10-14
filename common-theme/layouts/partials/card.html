@@ -1,11 +1,14 @@
-{{ $BaseURL := .Page.Parent.Permalink }}
 <a class="c-card" href="{{ relURL .Page.RelPermalink }}">
-  <h3 class="c-card__title">{{ .Name }}</h3>
-  {{ with .Page.Description }}
-    <p class="c-card__description">{{ . }}</p>
-  {{ end }}
-  <!-- Display emoji -->
-  <div class="c-card__image c-emoji">
-    {{ .Page.Params.emoji | default "🤖" }}
+  <div class="c-card__top">
+    <div class="c-card__image c-emoji" aria-hidden="true">
+      {{ .Page.Params.emoji | default "🤖" }}
+    </div>
+    <span class="c-card__arrow" aria-hidden="true">→</span>
+  </div>
+  <div class="c-card__body">
+    <h3 class="c-card__title">{{ .Name }}</h3>
+    {{ with .Page.Description }}
+      <p class="c-card__description">{{ . }}</p>
+    {{ end }}
   </div>
 </a>

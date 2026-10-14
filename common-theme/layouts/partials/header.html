@@ -1,32 +1,66 @@
 {{/*
   Site Top Header Partial
-  Contains the organization logo (SVG matching), the search component input,
-  and the accessible hamburger toggle button for the navigation drawer.
+  Contains the organization logo, desktop navigation bar, search input,
+  dark mode toggle, and accessible hamburger drawer toggle.
 */}}
 <header class="l-layout__header l-header">
   <div class="l-header__container">
     <h1 class="l-header__heading e-heading__6" data-pagefind-ignore>
-      <a class="l-header__home" href="/">
+      <a class="l-header__home" href="/" aria-label="MigraCode Barcelona Home">
         <span class="is-invisible">{{ .Section }} {{ .Title }} {{ site.Title }}</span>
         {{ $logos := resources.Match "custom-images/site-logo/*.svg" }}
         {{ range $logos }}{{ .Content | safeHTML }}{{ end }}
       </a>
     </h1>
+
+    <nav class="l-header__nav" aria-label="Primary Curriculum Navigation">
+      <a class="l-header__nav-link" href="/how-this-works/">How this works</a>
+      <a class="l-header__nav-link" href="/overview/">Syllabus</a>
+      <a class="l-header__nav-link" href="/guides/">Guides</a>
+      <a class="l-header__nav-link" href="/how-to-do-a-good-pr/">Assignments</a>
+    </nav>
+
     {{ partial "search.html" }}
-    <button
-      type="button"
-      id="open-menu"
-      aria-label="Open Navigation Menu"
-      class="l-header__action e-button e-button--icon js-menu-toggle e-heading__3">
-      <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24">
-        <path
-          stroke="var(--theme-color--ink)"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-      <span class="is-invisible">Open Menu</span>
-    </button>
+
+    <div class="l-header__actions">
+      <dark-mode class="l-header__mode">
+        <button
+          id="mode-toggle-header"
+          type="button"
+          aria-label="Toggle between light and dark mode"
+          class="e-button e-button--icon e__button--toggle l-header__btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            width="20"
+            height="20"
+            aria-hidden="true">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+          </svg>
+          <span class="is-invisible">Toggle dark mode</span>
+        </button>
+      </dark-mode>
+      <button
+        type="button"
+        id="open-menu"
+        aria-label="Open Navigation Menu"
+        class="l-header__action e-button e-button--icon js-menu-toggle l-header__btn">
+        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="22" height="22">
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <span class="is-invisible">Open Menu</span>
+      </button>
+    </div>
   </div>
 </header>

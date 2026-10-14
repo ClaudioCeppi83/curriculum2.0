@@ -15,12 +15,23 @@
     --pagefind-ui-font: var(--theme-font--copy);
   }
   .pagefind-ui--reset {
-    position: absolute;
+    position: relative !important;
+    width: 100% !important;
   }
   #search {
     width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
+    max-width: 320px;
+    margin: 0;
+    position: relative;
+  }
+  #search .pagefind-ui__form {
+    position: relative;
+    width: 100%;
+  }
+  #search .pagefind-ui__search-input {
+    height: 38px;
+    padding: 0.4rem 0.85rem 0.4rem 2.2rem;
+    box-sizing: border-box;
   }
   #search .pagefind-ui__search-input {
     border: 1px solid var(--theme-color--outline);
